@@ -10,7 +10,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: unityci/editor:ubuntu-2019.4.24f1-android-0.11.0
+    container: ppartida/unity-ci:v2019.4.24f1-01
     steps:
       # Checkout
       - uses: actions/checkout@v2
@@ -31,3 +31,16 @@ jobs:
       # Parse TestResults to JSON/HTML
       - name: EditMode - Unit Testing
         run: /opt/unity/Editor/Unity -runTests -nographics -batchmode -projectPath . -testResults "/tmp/TestResults" -testPlatform EditMode || exit 0
+      
+      - name: Create Default UnityLog file
+        run: touch /tmp/TestResults/UnityLog.txt
+      
+      - name: Parse Test Results
+        run: cd /opt/unity/UnityTestRunnerResultsReporter/ && dotnet /opt/unity/UnityTestRunnerResultsReporter/UnityTestRunnerResultsReporter.dll --resultsPath=/tmp/TestResults
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Upload test results
+          path: |
+            /tmp/TestResults
+            !/tmp/TestResults
