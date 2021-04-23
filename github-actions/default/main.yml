@@ -16,6 +16,8 @@ jobs:
 
       - name: List tester files.
         run: ls /UnityTestRunnerResultsReporter/bin/Release/net5.0/
+     - name: List tester files.
+        run: ls /opt/TestResults
       
       # Checkout
       - uses: actions/checkout@v2
