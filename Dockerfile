@@ -26,7 +26,7 @@ RUN apt install -y aspnetcore-runtime-5.0
 
 # Copy Test parser files
 # Delegate build to current system for architecture troubleshooting issues.
-RUN git clone git@github.com:porfiriopartida/UnityTestRunnerResultsReporter.git
-RUN cd UnityTestRunnerResultsReporter
-RUN dotnet build -c Release 
-COPY UnityTestRunnerResultsReporter/bin/Release/net5.0/* /opt/unity/UnityTestRunnerResultsReporter/
+RUN git clone https://github.com/porfiriopartida/UnityTestRunnerResultsReporter.git
+RUN dotnet build UnityTestRunnerResultsReporter -c Release 
+RUN echo "Testing that dotnet and the dll are callable"
+RUN dotnet /UnityTestRunnerResultsReporter/bin/Release/net5.0/UnityTestRunnerResultsReporter.dll || exit 0
