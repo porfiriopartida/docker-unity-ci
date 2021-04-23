@@ -22,11 +22,11 @@ RUN apt install -y apt-transport-https
 RUN apt install -y vim
 RUN apt install -y dotnet-sdk-5.0
 RUN apt install -y aspnetcore-runtime-5.0
-RUN apt install -y git
+# RUN apt install -y git
 
 # Copy Test parser files
 # Delegate build to current system for architecture troubleshooting issues.
-git clone git@github.com:porfiriopartida/UnityTestRunnerResultsReporter.git
-cd UnityTestRunnerResultsReporter
-dotnet build -c Release 
+RUN git clone git@github.com:porfiriopartida/UnityTestRunnerResultsReporter.git
+RUN cd UnityTestRunnerResultsReporter
+RUN dotnet build -c Release 
 COPY UnityTestRunnerResultsReporter/bin/Release/net5.0/* /opt/unity/UnityTestRunnerResultsReporter/
