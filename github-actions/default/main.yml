@@ -22,21 +22,22 @@ jobs:
       
       # Run Tests
       - name: EditMode - Unit Testing
-        run: /opt/unity/Editor/Unity -runTests -nographics -batchmode -projectPath . -testResults "/tmp/TestResults" -testPlatform EditMode || exit 0
+        run: /opt/unity/Editor/Unity -runTests -nographics -batchmode -projectPath . -testResults "/tmp/TestResults/TestResults.xml" -testPlatform EditMode || exit 0
       
       # Print TestResults.xml
       - name: List test results (most likely run a script that parses this
-        run: cat "/tmp/TestResults.xml"
+        run: cat "/tmp/TestResults/TestResults.xml"
 
       # Parse TestResults to JSON/HTML
-      - name: EditMode - Unit Testing
-        run: /opt/unity/Editor/Unity -runTests -nographics -batchmode -projectPath . -testResults "/tmp/TestResults" -testPlatform EditMode || exit 0
+      # - name: EditMode - Unit Testing
+      #   run: /opt/unity/Editor/Unity -runTests -nographics -batchmode -projectPath . -testResults "/tmp/TestResults" -testPlatform EditMode || exit 0
       
       - name: Create Default UnityLog file
         run: touch /tmp/TestResults/UnityLog.txt
-      
+
+        # Parse TestResults to JSON/HTML
       - name: Parse Test Results
-        run: cd /opt/unity/UnityTestRunnerResultsReporter/ && dotnet /opt/unity/UnityTestRunnerResultsReporter/UnityTestRunnerResultsReporter.dll --resultsPath=/tmp/TestResults
+        run: cd /opt/unity/UnityTestRunnerResultsReporter/ && dotnet /opt/unity/UnityTestRunnerResultsReporter/UnityTestRunnerResultsReporter.dll --resultsPath=/tmp/TestResults/
 
       - uses: actions/upload-artifact@v2
         with:
