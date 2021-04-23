@@ -1,0 +1,1 @@
+/opt/unity/Editor/Unity -quit -runTests -nograpihics -batchmode -projectPath /projects/LopapaTutorials -testResults /ci/results/results.xml -testPlatform EditMode -logFile /ci/logs/ci-unity-editor.log
