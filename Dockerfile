@@ -22,6 +22,7 @@ RUN apt install -y apt-transport-https
 RUN apt install -y vim
 RUN apt install -y dotnet-sdk-5.0
 RUN apt install -y aspnetcore-runtime-5.0
+RUN apt install -y git
 
 # Copy Test parser files
 # Delegate build to current system for architecture troubleshooting issues.
