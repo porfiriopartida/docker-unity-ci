@@ -13,6 +13,10 @@ jobs:
     #container: ppartida/unity-ci:v2019.4.24f1-01
     container: ppartida/unity-ci:latest
     steps:
+
+      - name: List tester files.
+        run: ls /UnityTestRunnerResultsReporter/bin/Release/net5.0/
+      
       # Checkout
       - uses: actions/checkout@v2
 
