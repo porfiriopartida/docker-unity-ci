@@ -14,30 +14,36 @@ jobs:
     steps:
       # Checkout
       - uses: actions/checkout@v2
-      
+
       # Activate the license inside your .github project
       # Replace this with your own license handling
       - name: License activation
         run: /opt/unity/Editor/Unity -quit -batchmode -nographics -force-free -manualLicenseFile .github/Unity_v2019.x.ulf || exit 0
-      
+
+      - name: Create Test Results dir
+        run: mkdir /opt/TestResults
+
+      - name: Create Default UnityLog file
+        run: touch /opt/TestResults/UnityLog.txt
+
+      - name: Create Default TestResults.xml file
+        run: touch /opt/TestResults/TestResults.xml
+
       # Run Tests
       - name: EditMode - Unit Testing
-        run: /opt/unity/Editor/Unity -runTests -nographics -batchmode -projectPath . -testResults "/tmp/TestResults/TestResults.xml" -testPlatform EditMode || exit 0
-      
+        run: /opt/unity/Editor/Unity -runTests -nographics -batchmode -projectPath . -testResults "/opt/TestResults/TestResults.xml" -testPlatform EditMode || exit 0
+
       # Print TestResults.xml
       - name: List test results (most likely run a script that parses this
-        run: cat "/tmp/TestResults/TestResults.xml"
+        run: ls /opt/TestResults/
 
-      # Parse TestResults to JSON/HTML
-      # - name: EditMode - Unit Testing
-      #   run: /opt/unity/Editor/Unity -runTests -nographics -batchmode -projectPath . -testResults "/tmp/TestResults" -testPlatform EditMode || exit 0
-      
-      - name: Create Default UnityLog file
-        run: touch /tmp/TestResults/UnityLog.txt
+      # Print TestResults.xml
+      - name: List test results (most likely run a script that parses this
+        run: cat /opt/TestResults/TestResults.xml
 
         # Parse TestResults to JSON/HTML
       - name: Parse Test Results
-        run: cd /opt/unity/UnityTestRunnerResultsReporter/ && dotnet /opt/unity/UnityTestRunnerResultsReporter/UnityTestRunnerResultsReporter.dll --resultsPath=/tmp/TestResults/
+        run: cd /opt/unity/UnityTestRunnerResultsReporter/ && dotnet /opt/unity/UnityTestRunnerResultsReporter/UnityTestRunnerResultsReporter.dll --resultsPath=/opt/TestResults/
 
       - uses: actions/upload-artifact@v2
         with:
