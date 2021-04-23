@@ -1,4 +1,3 @@
-
 services:
   unity-editor:
     container_name: ci-unity-dotnet-editor
