@@ -42,8 +42,9 @@ jobs:
         run: cat /opt/TestResults/TestResults.xml
 
         # Parse TestResults to JSON/HTML
+        # Move to directory because the script looks up for Template in the same path 
       - name: Parse Test Results
-        run: cd /opt/unity/UnityTestRunnerResultsReporter/ && dotnet /opt/unity/UnityTestRunnerResultsReporter/UnityTestRunnerResultsReporter.dll --resultsPath=/opt/TestResults/
+        run: cd /UnityTestRunnerResultsReporter/bin/Release/net5.0/ && dotnet UnityTestRunnerResultsReporter.dll --resultsPath=/opt/TestResults/
 
       - uses: actions/upload-artifact@v2
         with:
