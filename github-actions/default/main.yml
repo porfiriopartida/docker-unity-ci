@@ -32,9 +32,9 @@ jobs:
 
       # Run Tests
       - name: EditMode - Unit Testing
-        run: /opt/unity/Editor/Unity -runTests -nographics -batchmode -projectPath . -testResults "/opt/TestResults/TestResults.xml" -testPlatform EditMode || exit 0
+        run: xvfb-run -a --server-args="-screen 0 1024x768x24" /opt/unity/Editor/Unity -runTests -nographics -batchmode -projectPath . -testResults /opt/TestResults/TestResults.xml -testPlatform EditMode || exit 0
 
-      # Print TestResults.xml
+      # ls Current test results
       - name: List test results (most likely run a script that parses this
         run: ls /opt/TestResults/
 
@@ -46,6 +46,10 @@ jobs:
         # Move to directory because the script looks up for Template in the same path 
       - name: Parse Test Results
         run: cd /UnityTestRunnerResultsReporter/bin/Release/net5.0/ && dotnet UnityTestRunnerResultsReporter.dll --resultsPath=/opt/TestResults/
+
+      # ls TestResults after json and html are created
+      - name: List test results (most likely run a script that parses this
+        run: ls /opt/TestResults/
 
       - uses: actions/upload-artifact@v2
         with:
