@@ -25,15 +25,6 @@ jobs:
       - name: License activation
         run: /opt/unity/Editor/Unity -quit -batchmode -nographics -force-free -manualLicenseFile .github/Unity_v2019.x.ulf || exit 0
 
-      - name: Create Test Results dir
-        run: mkdir /opt/TestResults
-
-      - name: Create Default UnityLog file
-        run: touch /opt/TestResults/UnityLog.txt
-
-      - name: Create Default TestResults.xml file
-        run: touch /opt/TestResults/TestResults.xml
-
       # Run Tests
       - name: EditMode - Unit Testing
         run: xvfb-run -a --server-args="-screen 0 1024x768x24" /opt/unity/Editor/Unity -runTests -nographics -batchmode -projectPath . -testResults /opt/TestResults/TestResults.xml -testPlatform EditMode || exit 0
