@@ -3,8 +3,6 @@ name: UnityCI
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
   workflow_dispatch:
 
 jobs:
@@ -12,45 +10,47 @@ jobs:
     runs-on: ubuntu-latest
     #container: ppartida/unity-ci:v2019.4.24f1-01
     container: ppartida/unity-ci:latest
-    steps:
 
+    steps:
       - name: List tester files.
         run: ls /UnityTestRunnerResultsReporter/bin/Release/net5.0/
-     - name: List tester files.
+
+      - name: List /opt/TestResults/ (Expected only the log file)
         run: ls /opt/TestResults
-      
+
       # Checkout
       - uses: actions/checkout@v2
 
-      # Activate the license inside your .github project
+      # Activate the license inside your .github/ project
       # Replace this with your own license handling
+      # DO NOT add your license files to public repositories
       - name: License activation
         run: /opt/unity/Editor/Unity -quit -batchmode -nographics -force-free -manualLicenseFile .github/Unity_v2019.x.ulf || exit 0
 
-      # Run Tests
+      # Run Tests - uses xvfb for display bugs with screen less unity
       - name: EditMode - Unit Testing
         run: xvfb-run -a --server-args="-screen 0 1024x768x24" /opt/unity/Editor/Unity -runTests -nographics -batchmode -projectPath . -testResults /opt/TestResults/TestResults.xml -testPlatform EditMode || exit 0
 
-      # ls Current test results
-      - name: List test results (most likely run a script that parses this
+      - name: List /opt/TestResults/ (Expected log and xml files)
         run: ls /opt/TestResults/
 
       # Print TestResults.xml
-      - name: List test results (most likely run a script that parses this
+      - name: Preview TestResults.xml
         run: cat /opt/TestResults/TestResults.xml
 
         # Parse TestResults to JSON/HTML
         # Move to directory because the script looks up for Template in the same path 
-      - name: Parse Test Results
+      - name: Parse Test Results (exit 1 on failure detected)
         run: cd /UnityTestRunnerResultsReporter/bin/Release/net5.0/ && dotnet UnityTestRunnerResultsReporter.dll --resultsPath=/opt/TestResults/
 
       # ls TestResults after json and html are created
       - name: List test results (most likely run a script that parses this
+        if: ${{ always() }}
         run: ls /opt/TestResults/
 
       - uses: actions/upload-artifact@v2
+        if: ${{ always() }}
         with:
-          name: Upload test results
-          path: |
-            /tmp/TestResults
-            !/tmp/TestResults
+          name: TestResults
+          path: /opt/TestResults
+          retention-days: 2
