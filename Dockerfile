@@ -1,7 +1,7 @@
 ﻿# https://registry.hub.docker.com/r/unityci/editor/tags?page=1&ordering=last_updated
 # image: unityci/editor:ubuntu-2019.4.24f1-android-0.11.0
 # docker build -t ppartida/ubuntu-2019.4.24f1
-FROM unityci/editor:ubuntu-2019.4.25f1-android-0.11.0
+FROM unityci/editor:ubuntu-2019.4.28f1-android-0.13.0
 # ====
 LABEL version="0.2.0" \
       description="Ubuntu with Unity 2019.4.24f + Dot Net 5.0 for Unit Testing process" \
