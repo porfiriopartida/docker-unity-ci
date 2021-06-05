@@ -4,7 +4,7 @@
 FROM unityci/editor:ubuntu-2019.4.28f1-android-0.13.0
 # ====
 LABEL version="0.2.0" \
-      description="Ubuntu with Unity 2019.4.24f + Dot Net 5.0 for Unit Testing process" \
+      description="Ubuntu with Unity 2019.x.xxf-android-x.xx.x + Dot Net 5.0 for Unit Testing process" \
       tag1="Unity" \
       tag2=".NET" 
 
