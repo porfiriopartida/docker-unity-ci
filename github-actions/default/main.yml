@@ -8,8 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: ppartida/unity-ci:v2019.4.28f1
-#    container: ppartida/unity-ci:latest
+#    container: ppartida/unity-ci:v2019.4.28f1
+    container: ppartida/unity-ci:latest
 
     steps:
       - name: List tester files.
