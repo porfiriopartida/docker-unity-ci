@@ -21,3 +21,7 @@ Push to master.
 Push to docker if this is not automatically setup:
 
 [https://hub.docker.com/repository/docker/ppartida/unity-ci/builds]
+
+If the tag is not built, you can try:
+https://hub.docker.com/repository/docker/ppartida/unity-ci/builds/edit
+Build trigger to senda POST request.
