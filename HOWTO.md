@@ -14,4 +14,10 @@ Update the main.yml
 - container: ppartida/unity-ci:v2019.4.28f1
 - container: ppartida/<tagname>
 
-Push to docker
+Save the tag, move to latest.
+
+Push to master. 
+
+Push to docker if this is not automatically setup:
+
+[https://hub.docker.com/repository/docker/ppartida/unity-ci/builds]
